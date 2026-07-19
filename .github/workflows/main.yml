@@ -7,7 +7,7 @@ on:
         description: "Direct URL to Clang tar.gz archive"
         required: false
         type: string
-        default: "https://android.googlesource.com/platform/prebuilts/clang/host/linux-arm64/+archive/refs/heads/mirror-goog-main-llvm-toolchain-source/clang-r596125.tar.gz"
+        default: "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/mirror-goog-main-llvm-toolchain-source/clang-r596125.tar.gz"
       force_release:
         description: "Force create release even if version exists"
         required: false
