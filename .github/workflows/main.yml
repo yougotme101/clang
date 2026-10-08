@@ -87,21 +87,21 @@ jobs:
           echo "✅ Extracted OK"
           echo "$CLANG_VERSION_INFO"
 
-      - name: "🗜️ Compress as zip"
+      - name: "🗜️ Compress as tar.gz"
         run: |
           mkdir -p artifacts
-          echo "🗜️ Creating ${VERSION}-linux-x86_64.zip..."
+          echo "🗜️ Creating ${VERSION}.tar.gz..."
           cd "extract/${VERSION}"
-          zip -r9 "../../artifacts/${VERSION}-linux-x86_64.zip" .
+          tar.gz -r9 "../../artifacts/${VERSION}.tar.gz" .
           cd ../..
 
-          ZIP_SIZE=$(du -h "artifacts/${VERSION}-linux-x86_64.zip" | cut -f1)
-          ZIP_SHA256=$(sha256sum "artifacts/${VERSION}-linux-x86_64.zip" | cut -d' ' -f1)
+          ZIP_SIZE=$(du -h "artifacts/${VERSION}.tar.gz" | cut -f1)
+          ZIP_SHA256=$(sha256sum "artifacts/${VERSION}.tar.gz" | cut -d' ' -f1)
           echo "ZIP_SIZE=$ZIP_SIZE" >> $GITHUB_ENV
           echo "ZIP_SHA256=$ZIP_SHA256" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_ENV
 
-          echo "✅ zip created: $ZIP_SIZE  sha256: $ZIP_SHA256"
+          echo "✅ tar.gz created: $ZIP_SIZE  sha256: $ZIP_SHA256"
 
       - name: "🏷️ Create release"
         uses: softprops/action-gh-release@v2
@@ -117,7 +117,7 @@ jobs:
             ### 📁 File
             | File | Size | SHA256 |
             |------|------|--------|
-            | `${{ env.VERSION }}-linux-x86_64.zip` | ${{ env.ZIP_SIZE }} | `${{ env.ZIP_SHA256 }}` |
+            | `${{ env.VERSION }}.tar.gz` | ${{ env.ZIP_SIZE }} | `${{ env.ZIP_SHA256 }}` |
 
             ### ⚙️ Clang version
             ```
@@ -138,7 +138,7 @@ jobs:
 
             ---
             **Build date:** ${{ env.BUILD_DATE }} · [Workflow run #${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          files: artifacts/${{ env.VERSION }}-linux-x86_64.zip
+          files: artifacts/${{ env.VERSION }}.tar.gz
           draft: false
           prerelease: false
           
